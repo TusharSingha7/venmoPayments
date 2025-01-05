@@ -1,11 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-export default function Card({heading,label1,label2,placeholder} : {
-    heading? : string,
-    label1? : string,
-    label2? : string,
-    placeholder? : string,
-}){
+export default function Login(){
         const nav = useNavigate();
         const [inp,setInp] = useState<string>("");
         return <div className="grid grid-rows-10 grid-cols-10 h-screen">
@@ -14,23 +9,23 @@ export default function Card({heading,label1,label2,placeholder} : {
                     Venmo
                 </div>
                 <div className="flex justify-center">
-                    {heading ? heading : "card"}
+                    Login
                 </div>
                 <div className="flex justify-center">
                     <input onChange={(e)=>{
                         setInp(e.target.value);
-                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={placeholder ? placeholder : "enter email"}></input>
+                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"enter email"}></input>
                 </div>
                 <div className="flex justify-center">
                     <button onClick={()=>{
-                        nav('/home');
-                    }} className="w-full lg:mx-20 bg-blue-500 my-2 rounded-full text-white">{label1 ? label1 : "B1"}</button>
+                        if(inp.length < 11) alert("Invalid Input");
+                        nav('/login/verify/?usern=' + inp);
+                    }} className="w-full lg:mx-20 bg-blue-500 my-2 rounded-full text-white">{"Next"}</button>
                 </div>
                 <div className="flex justify-center">
                     <button onClick={()=>{
                         nav('/signup');
-                        if(inp == ""){}
-                    }} className="w-full lg:mx-20 bg-white my-2 rounded-full border-2 border-blue-500 text-blue-500">{label2 ? label2 : "B2"}</button>
+                    }} className="w-full lg:mx-20 bg-white my-2 rounded-full border-2 border-blue-500 text-blue-500">{"Signup"}</button>
                 </div>
             </div>
         </div>

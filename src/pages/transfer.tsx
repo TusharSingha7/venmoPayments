@@ -1,7 +1,7 @@
 import AppBar from "../components/appBar";
 import SideBar from "../components/sideBar";
 
-export default function Account(){
+export default function Transfer(){
     return (
       <div className="h-screen bg-gray-200 overflow-hidden">
         <AppBar />
@@ -10,7 +10,7 @@ export default function Account(){
             <SideBar />
           </div>
           <div className="col-start-3 col-end-11 border-l border-l-slate-600 pl-2 pt-2 text-3xl text-purple-600">
-            Account
+            Transfer
           </div>
         </div>
       </div>
