@@ -11,7 +11,7 @@ export default function Explore(){
             <SideBar />
           </div>
           <div className="col-start-3 col-end-11 border-l border-l-slate-600 pl-2 pt-2 text-3xl text-purple-600">
-            Transfer
+            Explore
           </div>
         </div>
       </div>
