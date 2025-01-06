@@ -17,7 +17,9 @@ export default function AppBar(){
         <button className="bg-purple-500 rounded-full px-3 mb-2 mt-2 text-white flex items-center">Buy crypto</button>
         <button><img src={grid} className="p-2 w-10 h-10"></img></button>
         <button><img src={qmark} className="p-2 w-10 h-10"></img></button>
-        <button><img src={prof} className="p-2 w-10 h-10"></img></button>
+        <button onClick={()=>{
+            nav('/account');
+        }}><img src={prof} className="p-2 w-10 h-10"></img></button>
      </div>
     </div>
     </>
