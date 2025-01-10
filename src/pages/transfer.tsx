@@ -1,6 +1,5 @@
 import { useState } from "react";
 import AppBar from "../components/appBar";
-import SideBar from "../components/sideBar";
 import Credit from "../components/credit";
 import Upi from "../components/upi";
 export default function Transfer(){

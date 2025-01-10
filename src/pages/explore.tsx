@@ -1,7 +1,5 @@
 
 import AppBar from "../components/appBar";
-import SideBar from "../components/sideBar";
-
 export default function Explore(){
     return (
       <div className="h-screen bg-gray-200 overflow-hidden">

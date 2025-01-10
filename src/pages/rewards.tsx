@@ -1,7 +1,6 @@
 
 
 import AppBar from "../components/appBar";
-import SideBar from "../components/sideBar";
 
 export default function Rewards(){
     return (
