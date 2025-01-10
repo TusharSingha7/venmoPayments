@@ -1,7 +1,11 @@
+import { useState } from "react";
 import AppBar from "../components/appBar";
-import SideBar from "../components/sideBar";
-import calendersym from '../icons/calender.png'
+import Adv0 from "../components/adv0";
+import Adv1 from "../components/adv1";
+import Adv2 from "../components/adv2";
 export default function Home(){
+    const [activeDot,setActiveDot] = useState(1);
+    const arr : JSX.Element[] = [<Adv0/>,<Adv1/>,<Adv2/>];
     const data = {
       name : "Tushar Singh"
     }
@@ -9,11 +13,7 @@ export default function Home(){
       <div className="h-screen bg-gray-200 overflow-hidden">
         <AppBar />
         <div className="grid grid-cols-10 min-h-full">
-          <div className="col-start-1 col-end-3">
-            <SideBar />
-          </div>
-          <div className="grid grid-cols-10 col-start-3 col-end-11 border-l border-l-slate-600">
-              <div className="min-h-full col-span-7 flex flex-col p-2">
+              <div className="min-h-full md:col-span-8 flex flex-col p-2 col-span-10">
                   <div className="pl-2 pt-2 text-3xl text-purple-600 mb-2">Good afternoon, {data.name}</div>
                   <div className="min-w-full flex flex-col bg-white rounded-lg my-3 p-2 shadow">
                     <div>portfolio</div>
@@ -29,17 +29,22 @@ export default function Home(){
                       <div>Advertisement</div>
                   </div>
               </div>
-              <div className="col-span-3 min-h-full flex-col pt-16 px-2">
-                  <div className="bg-white rounded-lg p-2 mt-2 shadow">
-                    <div className="flex justify-center">
-                      <img className="w-28 h-28" src={calendersym}></img>
-                    </div>
-                    <div className="font-bold">Set up recurring buys</div>
-                    <div className="text-slate-500 text-sm">Schedule regular crypto purchases to balance market fluctuations</div>
-                    <button className="flex justify-center text-purple-800 min-w-full mr-2 my-2 pb-0.5 rounded-full bg-purple-300 items-center font-bold">Get started</button>
+              <div className="md:col-span-2 min-h-full flex-col pt-16 px-2 md:block hidden">
+                  {arr[activeDot]}
+                  <div className="flex justify-center items-center">
+                    <button onClick={()=>{
+                      const nval = (activeDot + 2)%3;
+                      setActiveDot(nval);
+                    }} className="mx-3 rounded-full bg-white w-8 h-8 items-center flex justify-center pb-1">{"<"}</button>
+                    <div className={`text-3xl ${activeDot == 0 ? 'text-purple-600' : 'text-white'} pb-5 mx-1`}>.</div>
+                    <div className={`text-3xl ${activeDot == 1 ? 'text-purple-600' : 'text-white'} pb-5 mx-1`}>.</div>
+                    <div className={`text-3xl ${activeDot == 2 ? 'text-purple-600' : 'text-white'} pb-5 mx-1`}>.</div>
+                    <button onClick={()=>{
+                      const nval = (activeDot + 1)%3;
+                      setActiveDot(nval);
+                    }} className="mx-3 rounded-full bg-white w-8 h-8 items-center flex justify-center pb-1">{">"}</button>
                   </div>
               </div>
-          </div>
         </div>
       </div>
     );

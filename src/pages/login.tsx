@@ -18,8 +18,7 @@ export default function Login(){
                 </div>
                 <div className="flex justify-center">
                     <button onClick={()=>{
-                        if(inp.length < 11) alert("Invalid Input");
-                        else nav('/login/verify/?usern=' + inp);
+                        nav('/login/verify/?usern=' + inp);
                     }} className="w-full lg:mx-20 bg-blue-500 my-2 rounded-full text-white">{"Next"}</button>
                 </div>
                 <div className="flex justify-center">
