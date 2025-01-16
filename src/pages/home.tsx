@@ -10,7 +10,7 @@ export default function Home(){
       name : "Tushar Singh"
     }
     return (
-      <div className="h-screen bg-gray-200 overflow-hidden">
+      <div className="min-h-screen bg-gray-200 overflow-hidden">
         <AppBar />
         <div className="grid grid-cols-10 min-h-full">
               <div className="min-h-full md:col-span-8 flex flex-col p-2 col-span-10">

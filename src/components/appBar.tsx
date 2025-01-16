@@ -7,13 +7,16 @@ import menusym from '../icons/menu.png'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import SideBar from './sideBar'
+import Dropdown from './dropdown'
 export default function AppBar(){
    const nav = useNavigate();
    const [view,setView] = useState(false);
+   const [dview,dsetView] = useState(false);
     return <>
     {view == true ? <SideBar onclick={()=>{
         setView(false);
     }}/> : <div></div>}
+    {dview ? <Dropdown/> : <div/>}
     <div className="flex justify-between p-2 border-b border-b-slate-500 sticky top-0 z-10">
      <div className="flex justify-start ml-2">
         <button onClick={()=>{
@@ -27,9 +30,11 @@ export default function AppBar(){
         <span className='pt-3'>KRAKEN</span>
         </button>
      </div>
-     <div className="flex mr-2 gap-2">
+     <div className="mr-2 gap-2 hidden sm:flex">
         <button className="bg-purple-500 rounded-full px-3 mb-2 mt-2 text-white flex items-center">Buy crypto</button>
-        <button><img src={grid} className="p-2 w-10 h-10"></img></button>
+        <button onClick={()=>{
+            dsetView(!dview);
+        }}><img src={grid} className="p-2 w-10 h-10"></img></button>
         <button><img src={qmark} className="p-2 w-10 h-10"></img></button>
         <button onClick={()=>{
             nav('/account');

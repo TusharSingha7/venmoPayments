@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login(){
         const nav = useNavigate();
         const [inp,setInp] = useState<string>("");
-        return <div className="grid grid-rows-10 grid-cols-10 h-screen">
+        return <div className="grid grid-rows-10 grid-cols-10 min-h-screen">
             <div className="col-start-4 col-end-8 row-start-3 row-end-9 grid overflow-hidden p-4 rounded-lg shadow">
                 <div className="flex justify-center text-blue-500 font-extrabold text-2xl italic">
                     Venmo

@@ -7,7 +7,7 @@ export default function SignUp(){
         const [pass,setPass] = useState<string>("");
         const [pass2,setPass2] = useState<string>("");
         const [name,setName] = useState<string>("");
-        return <div className="grid grid-rows-10 grid-cols-10 h-screen">
+        return <div className="grid grid-rows-10 grid-cols-10 min-h-screen">
             <div className="col-start-4 col-end-8 row-start-2 row-end-10 grid overflow-hidden p-4 rounded-lg shadow">
                 <div className="flex justify-center text-blue-500 font-extrabold text-2xl italic">
                     Venmo
