@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { LoginSchema,SignupSchema } from '../types/dataTypes';
 export const userRouter = express.Router();
+const secret = process.env.JWTSECRET || "";
 // userRouter.use('*/',(req,res,next)=>{
 //     console.log('in middleware');
 //     next();
@@ -12,7 +13,6 @@ export const userRouter = express.Router();
 userRouter.post('/auth',async (req,res)=>{
     try {
         const {code} : any = req.query;
-        console.log(code);
         const googleRes = await oauth2client.getToken(code);
         oauth2client.setCredentials(googleRes.tokens);
         const oauth2 = google.oauth2({ version: 'v2', auth: oauth2client });
@@ -21,7 +21,7 @@ userRouter.post('/auth',async (req,res)=>{
         console.log(userData);
         //check user in database
         //return a jwt token
-        const token = jwt.sign(userData,'secret');
+        const token = jwt.sign(userData,secret);
         res.json({
             token
         })
@@ -48,7 +48,7 @@ userRouter.get('/verify',async (req,res)=>{
         if(!cmp) res.status(404).json({msg : 'wrong password'});
         //return jwt token
         //use userid from database to create token
-        const token = jwt.sign(user_data,'secret');
+        const token = jwt.sign(user_data,secret);;
         res.json({
             token
         })

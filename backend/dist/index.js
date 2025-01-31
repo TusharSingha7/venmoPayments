@@ -6,14 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const user_1 = require("./routes/user");
-const dotenv_1 = __importDefault(require("dotenv"));
-const path_1 = __importDefault(require("path"));
-dotenv_1.default.config({
-    path: path_1.default.join(__dirname, '../.env')
-});
+require("./config");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use('/api/v1/user/', user_1.userRouter);
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 app.listen(PORT);
