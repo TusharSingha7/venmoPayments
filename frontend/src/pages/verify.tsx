@@ -1,5 +1,7 @@
+import axios from "axios";
 import { useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 export default function Verify(){
         const nav = useNavigate();
         const [inp,setInp] = useState<string>("");
@@ -19,9 +21,25 @@ export default function Verify(){
                     }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"enter password"}></input>
                 </div>
                 <div className="flex justify-center">
-                    <button onClick={()=>{
-                        if(inp){}
-                        nav('/home');
+                    <button onClick={async ()=>{
+                        //verify from backend
+                        try{
+                            const response = await axios.get(`${BACKEND_URL}/api/v1/user/verify`,{
+                                data : {
+                                    email : username,
+                                    password : inp
+                                }
+                            });
+                            if(response){
+                                const token = response.data.token;
+                                localStorage.setItem('token',token);
+                                nav('/home');
+                            }
+                            else alert("failed");
+                        }
+                        catch(err) {
+                            alert(err);
+                        }
                     }} className="w-full lg:mx-20 bg-blue-500 my-2 rounded-full text-white">{"Next"}</button>
                 </div>
                 <div className="flex justify-center">

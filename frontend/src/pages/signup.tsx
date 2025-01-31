@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
+import axios from "axios";
 export default function SignUp(){
     const nav = useNavigate();
         const [email,setEmail] = useState<string>("");
@@ -22,30 +24,44 @@ export default function SignUp(){
                 <div className="flex justify-center">
                     <input onChange={(e)=>{
                         setName(e.target.value);
-                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"enter unique username"}></input>
+                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"Enter Name"}></input>
                 </div>
                 <div className="flex justify-center">
                     <input onChange={(e)=>{
                         setEmail(e.target.value);
-                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"enter email"}></input>
+                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"Enter Email"}></input>
                 </div>
                 <div className="flex justify-center">
                     <input onChange={(e)=>{
                         setPass(e.target.value);
-                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"enter pass"}></input>
+                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"Enter Password"}></input>
                 </div>
                 <div className="flex justify-center">
                     <input onChange={(e)=>{
                         setPass2(e.target.value);
-                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"confirm pass"}></input>
+                    }} className="w-full lg:mx-20 my-2 rounded-lg px-2 border border-slate-400" placeholder={"Confirm Password"}></input>
                 </div>
                 <div className="flex justify-center">
-                    <button onClick={()=>{
+                    <button onClick={async ()=>{
                         if(pass != pass2){
                             alert("password doesnot match");
                         }
-                        else nav('/login');
-                        if(email == name){}
+                        else {
+                            try{
+                                const response = await axios.post(`${BACKEND_URL}/api/v1/user/signup`,{
+                                    data : {
+                                        name : name,
+                                        email : email,
+                                        password : pass
+                                    }
+                                });
+                                if(!response) alert("Retry");
+                                else nav('/login');
+                            }
+                            catch(err) {
+                                alert(err);
+                            }
+                        }
                     }} className="w-full lg:mx-20 bg-blue-500 my-2 rounded-full text-white">SignUp</button>
                 </div>
             </div>
