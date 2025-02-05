@@ -1,2 +1,2 @@
 
-export const BACKEND_URL = "https://venmopayments.onrender.com"
+export const BACKEND_URL = "http://localhost:8080"
