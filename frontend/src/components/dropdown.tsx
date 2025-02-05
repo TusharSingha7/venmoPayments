@@ -8,7 +8,7 @@ import dbmssym from '../icons/server.png'
 import { useNavigate } from 'react-router-dom'
 export default function Dropdown(){
     const nav = useNavigate();
-    return <div className="shadow bg-white absolute top-16 right-28 flex flex-col w-42 z-10 p-2 rounded rounded-md hidden sm:flex">
+    return <div className="shadow bg-white absolute top-16 right-16 flex flex-col w-42 z-10 p-2 rounded rounded-md hidden sm:flex">
         <button className="flex items-center py-2" onClick={()=>{
             nav('/account');
         }}><img src={setsym} className='w-5 h-5 mr-1'/>Settings</button>

@@ -1,6 +1,5 @@
 
 import grid from '../icons/grid.png'
-import qmark from '../icons/interrogation.png'
 import prof from '../icons/user.png'
 import halfc from '../icons/half-circle.png'
 import menusym from '../icons/menu.png'
@@ -31,11 +30,9 @@ export default function AppBar(){
         </button>
      </div>
      <div className="mr-2 gap-2 hidden sm:flex">
-        <button className="bg-purple-500 rounded-full px-3 mb-2 mt-2 text-white flex items-center">Buy crypto</button>
         <button onClick={()=>{
             dsetView(!dview);
         }}><img src={grid} className="p-2 w-10 h-10"></img></button>
-        <button><img src={qmark} className="p-2 w-10 h-10"></img></button>
         <button onClick={()=>{
             nav('/account');
         }}><img src={prof} className="p-2 w-10 h-10"></img></button>
