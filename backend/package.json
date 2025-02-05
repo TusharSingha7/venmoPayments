@@ -21,6 +21,7 @@
     "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
     "oauth2client": "^1.0.0",
+    "razorpay": "^2.9.5",
     "recoil": "^0.7.7",
     "zod": "^3.24.1"
   },

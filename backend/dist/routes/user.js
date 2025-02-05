@@ -15,10 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const googleConfig_1 = require("../utils/googleConfig");
+require("../config");
 const googleapis_1 = require("googleapis");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const dataTypes_1 = require("../types/dataTypes");
+const index_1 = __importDefault(require("../razor/index"));
+const crypto_1 = __importDefault(require("crypto"));
 exports.userRouter = express_1.default.Router();
 const secret = process.env.JWTSECRET || "";
 // userRouter.use('*/',(req,res,next)=>{
@@ -50,6 +53,7 @@ exports.userRouter.post('/auth', (req, res) => __awaiter(void 0, void 0, void 0,
 }));
 exports.userRouter.get('/verify', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user_data = req.body;
+    console.log('in verify');
     //aplly zod verification here
     try {
         //find user in databse
@@ -102,4 +106,41 @@ exports.userRouter.get('/', (req, res) => {
     res.json({
         msg: 'default'
     });
+});
+exports.userRouter.post('/razorpay-order-create', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const amount = req.body.amount;
+        const order = yield (0, index_1.default)({ amount });
+        res.json({
+            order
+        });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(405).json({
+            msg: "failed creating order"
+        });
+    }
+}));
+exports.userRouter.post('/verify-payment', (req, res) => {
+    console.log(req.body);
+    try {
+        const razorpaySignature = req.body.razorpay_signature;
+        const body = req.body.razorpay_order_id + '|' + req.body.razorpay_payment_id;
+        console.log("here");
+        const expectedSignature = crypto_1.default
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "")
+            .update(body.toString())
+            .digest("hex");
+        if (expectedSignature !== razorpaySignature) {
+            return res.status(400).json({ error: "Invalid Signature" });
+        }
+        return res.json({ success: true });
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(405).json({
+            msg: "failed verifying payment"
+        });
+    }
 });

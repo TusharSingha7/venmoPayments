@@ -1,9 +1,13 @@
 import express from 'express'
+import { Request,Response } from 'express';
 import { oauth2client } from '../utils/googleConfig';
+import '../config'
 import { google } from 'googleapis';
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { LoginSchema,SignupSchema } from '../types/dataTypes';
+import createOrder from '../razor/index';
+import crypto from 'crypto';
 export const userRouter = express.Router();
 const secret = process.env.JWTSECRET || "";
 // userRouter.use('*/',(req,res,next)=>{
@@ -35,6 +39,7 @@ userRouter.post('/auth',async (req,res)=>{
 });
 userRouter.get('/verify',async (req,res)=>{
     const user_data = req.body;
+    console.log('in verify');
     //aplly zod verification here
     try {
         //find user in databse
@@ -83,4 +88,44 @@ userRouter.get('/',(req,res)=>{
     res.json({
         msg : 'default'
     })
-})
+});
+userRouter.post('/razorpay-order-create',async (req,res)=>{
+    try {
+        const amount = req.body.amount;
+        const order = await createOrder({amount});
+        res.json({
+            order
+        })
+    }
+    catch(err) {
+        console.log(err);
+        res.status(405).json({
+            msg : "failed creating order"
+        })
+    }
+});
+
+userRouter.post('/verify-payment', (req: Request, res: Response) : any => {
+    console.log(req.body);
+    try {
+      const razorpaySignature = req.body.razorpay_signature;
+      const body = req.body.razorpay_order_id + '|' + req.body.razorpay_payment_id;
+      console.log("here");
+      const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET || "")
+        .update(body.toString())
+        .digest("hex");
+  
+      if (expectedSignature !== razorpaySignature) {
+        return res.status(400).json({ error: "Invalid Signature" });
+      }
+
+      return res.json({ success: true });
+    } catch (err) {
+      console.log(err);
+      return res.status(405).json({
+        msg: "failed verifying payment"
+      });
+    }
+  });
+  
