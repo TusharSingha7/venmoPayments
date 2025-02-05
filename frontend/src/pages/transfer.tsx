@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import AppBar from "../components/appBar";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL, RAZORPAY_KEY_ID } from "../config";
 
 declare global {
   interface Window {
@@ -10,7 +10,7 @@ declare global {
 }
 
 export default function Transfer() {
-  const [bank, setBank] = useState<string>("HDFC");
+  const [bank, setBank] = useState<string>("Razor");
   const [amt, setAmt] = useState<string>("0");
 
   const handleAddMoney = async () => {
@@ -29,15 +29,20 @@ export default function Transfer() {
           const orderData = response.data.order;
 
           const options = {
-            key: "rzp_test_k7XNTgW8eXjL0n",
+            key: RAZORPAY_KEY_ID,
             amount: orderData.amount,
             currency: orderData.currency,
             order_id: orderData.id,
             name: "PayNow",
             description: "Payment Transaction",
             handler: function (res: any) {
+              console.log(res);
               alert("Payment Successful! Payment ID: " + res.razorpay_payment_id);
-              axios.post(`${BACKEND_URL}/api/v1/user/verify-payment`, res)
+              axios.post(`${BACKEND_URL}/api/v1/user/verify-payment`,{
+                    razorpay_order_id: res.razorpay_order_id,
+                    razorpay_payment_id: res.razorpay_payment_id,
+                    razorpay_signature: res.razorpay_signature
+              })
                 .then((res) => console.log("Payment Verified:", res.data))
                 .catch((err) => console.error("Payment Verification Failed", err));
             },
